@@ -129,6 +129,51 @@ def test_invert():
     assert m == analysis.invert(analysis.invert(m))
 
 
+def test_compress_corners():
+    m = analysis.compress(test_corners())
+    assert analysis.value(m) == 36
+    assert analysis.area_of_shapes(m) == [9, 9, 9, 9]
+    assert m == [[9, 0, 9],
+                 [0, 0, 0],
+                 [9, 0, 9]]
+
+
+def test_compress_horizontal_lines():
+    m = analysis.compress(test_horizontal_lines())
+    # assert analysis.value(m) == 60
+    # assert analysis.area_of_shapes(m) == [6, 6, 12, 36]
+    assert m == [[1, 1, 6, 1, 1],
+                 [1, 0, 0, 0, 1],
+                 [1, 0, 6, 0, 1],
+                 [1, 0, 0, 0, 1],
+                 [1, 0, 6, 0, 1],
+                 [1, 0, 0, 0, 1],
+                 [2, 0, 12, 0, 2],
+                 [1, 1, 6, 1, 1]]
+    return m
+
+
+def test_compress_given_split():
+    m = analysis.compress(test_given_split())
+    assert analysis.value(m) == 233600
+    assert analysis.area_of_shapes(m) == [116800, 116800]
+    assert m == [[116800],
+                 [0],
+                 [116800]]
+
+
+def test_compress_given_subshape():
+    m = analysis.compress(test_given_subshape())
+    # assert analysis.value(m) == 215424
+    # assert analysis.area_of_shapes(m) == [22816, 192608]
+    # assert m == [23232,
+                 # 22816,
+
+
+def test_transpose():
+    assert test_vertical_lines() == analysis.transpose(test_horizontal_lines())
+
+
 def facloop(n, acc=1):
     while n > 1:
         (n, acc) = (n - 1, acc * n)
