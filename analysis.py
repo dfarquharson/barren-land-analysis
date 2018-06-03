@@ -1,3 +1,6 @@
+from pprint import pprint
+
+
 def make(x, y):
     return [[1] * x for i in range(y)]
 
@@ -8,19 +11,46 @@ def blank(botleft, topright, matrix):
             matrix[i][j] = 0
 
 
-def total(matrix):
+def value(matrix):
     return sum(map(sum, matrix))
 
 
-def dump(matrix, filename='dump.matrix'):
-    with open(filename, 'w') as f:
-        for line in matrix:
-            f.write(','.join(map(str, line)) + '\n')
-
-
-def num_shapes(matrix):
-    return 1
+def max_possible(matrix):
+    return sum(map(len, matrix))
 
 
 def area_of_shapes(matrix):
-    return [total(matrix)]
+    # question: are shapes purely edge sharing, or also vertex sharing?
+    #           diagonals, or just parallels and perpendiculars?
+    min_x, max_x = 0, len(matrix[0]) - 1
+    min_y, max_y = 0, len(matrix) - 1
+    visited = [[False] * len(x) for x in matrix]
+    shape_areas = []
+
+    def find_neighbors(x, y):
+        if not visited[x][y]:
+            visited[x][y] = True
+            if matrix[x][y] == 1:
+                shape_areas[-1] += 1
+                if x < max_x:
+                    find_neighbors(x + 1, y)
+                if x > min_x:
+                    find_neighbors(x - 1, y)
+                if y < max_y:
+                    find_neighbors(x, y + 1)
+                if y > min_y:
+                    find_neighbors(x, y - 1)
+
+    for row in enumerate(matrix):
+        for cell in enumerate(row[1]):
+            if not visited[row[0]][cell[0]]:
+                if cell[1] == 1:
+                    shape_areas.append(0)
+                    find_neighbors(row[0], cell[0])
+                visited[row[0]][cell[0]] = True
+
+    return sorted(shape_areas)
+
+
+def invert(matrix):
+    return [[0 if cell == 1 else 1 for cell in row] for row in matrix]
