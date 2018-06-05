@@ -146,15 +146,24 @@ def main(raw_coordinates, x_size=400, y_size=600):
     return ' '.join(map(str, area_of_shapes(matrix)))
 
 
-if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        if sys.argv[1] == '-t':
+def handle(args):
+    ''' Handles the provided arguments when run from the command line.
+    This is here instead of just in the "if __name__ == '__main__':" block
+    for enhanced testability.
+    '''
+    if len(args) > 1:
+        if args[1] == '-t':
             import doctest
             doctest.testmod()
+            return ''
         else:
-            print(main(sys.argv[1]))
+            return main(args[1])
     else:
-        print('''Usage:
+        return '''Usage:
         python analysis.py \'{"0 292 399 307"}\'
         python analysis.py \'{"48 192 351 207", "48 392 351 407"}\'
-        ''')
+        '''
+
+
+if __name__ == '__main__':
+    print(handle(sys.argv))
