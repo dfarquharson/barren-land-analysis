@@ -1,5 +1,7 @@
 .pytest_cache
 __pycache__
+.coverage
 env/*
 .*sw*
+htmlcov/*
 dump.matrix
