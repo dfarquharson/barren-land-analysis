@@ -30,3 +30,9 @@ If you're really in to static analysis, and you want to see more info about this
 
 ## Why Python?
 While I have a strong preference for static types in projects of team_size > 1, I found that Python was a pleasant choice for this particular problem if only for the shallow reason that list literals make creating/viewing matrices slightly easier in Python than in Java.
+
+## Noteworthy Decisions
+Initially, I had settled on a recursive solution, but that caused some nasty stack overflows when dealing with larger matrices. As such, I had to translate that recursive solution into an iterative one where I held my own little stack of coordinates to explore in memory instead of relying on the call stack to store that for me. I still think the recursive solution is far more "natural", but this is a good reminder of the great wisdom of [SICP](https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-4.html#_toc_start) that iteration is just a special case of recursion :)
+
+## Areas for Improvement
+In a word: performance. I'm unsatisfied with the performance of this solution on the larger examples, and that warrants more benchmarking and investigation to really discover the root cause. It might also be fun and beneficial to explore the use of [numpy](http://www.numpy.org) for a "free" performance boost.
