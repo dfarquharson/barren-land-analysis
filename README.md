@@ -23,10 +23,10 @@ Tests will be run automatically during a `make build`, but if you want to run th
 make check
 make host-coverage
 ```
-Now, navigate to [localhost:8000](localhost:8000) and you'll see some shiny code coverage reports!
+Now, navigate to [localhost:8000](http://localhost:8000) and you'll see some shiny code coverage reports!
 
 ### Static Analysis
-If you're really into static analysis, and you want to see more info about this codebase, run `make static-analysis` to see the results of some [pylint](https://www.pylint.org) and [radon](https://radon.readthedocs.io/en/latest/) analysis.
+If you're really in to static analysis, and you want to see more info about this codebase, run `make static-analysis` to see the results of some [pylint](https://www.pylint.org) and [radon](https://radon.readthedocs.io/en/latest/) analysis.
 
 ## Why Python?
 While I have a strong preference for static types in projects of team_size > 1, I found that Python was a pleasant choice for this particular problem if only for the shallow reason that list literals make creating/viewing matrices slightly easier in Python than in Java.
