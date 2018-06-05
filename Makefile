@@ -10,19 +10,20 @@ test:
 style:
 	pycodestyle *.py
 
-check: doctest test style loc
-
-loc:
-	@echo "LOC analysis.py: `cat analysis.py | wc -l`"
-	@echo "LOC test_analysis.py: `cat test_analysis.py | wc -l`"
-
-lint:
-	pylint analysis.py
-
-uber-check: check loc lint
+check: doctest test style
 
 host-coverage:
 	cd htmlcov && python -m http.server
+
+lint:
+	-pylint analysis.py
+
+radon:
+	radon raw analysis.py
+	radon cc analysis.py
+	radon mi analysis.py
+
+static-analysis: lint radon
 
 build:
 	docker build -t barren-land-analysis:latest .
