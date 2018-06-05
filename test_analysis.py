@@ -159,6 +159,13 @@ def test_given_subshape():
     return m
 
 
+def test_main_example1():
+    assert analysis.main('{"0 292 399 307"}') == '116800 116800'
+    assert analysis.main(
+        '{"48 192 351 207", "48 392 351 407",' +
+        ' "120 52 135 547", "260 52 275 547"}') == '22816 192608'
+
+
 def test_value():
     m = [[1, 1, 0],
          [0, 0, 0],

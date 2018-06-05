@@ -1,4 +1,6 @@
 import uuid
+import ast
+import sys
 
 
 def create_matrix(x, y):
@@ -80,7 +82,7 @@ def area_of_shapes(matrix):
 
 
 def value(matrix):
-    '''Calculates the total value of the given matrix.
+    ''' Calculates the total value of the given matrix.
 
     Example:
     >>> m = create_matrix(2, 3)
@@ -90,7 +92,7 @@ def value(matrix):
 
 
 def max_possible(matrix):
-    '''Calculates the total possible value of the given matrix.
+    ''' Calculates the total possible value of the given matrix.
 
     Example:
     >>> m = [[1, 0, 1],
@@ -103,7 +105,7 @@ def max_possible(matrix):
 
 
 def inverse(matrix):
-    '''Inverts the given matrix.
+    ''' Inverts the given matrix.
 
     Example:
     >>> m = [[1, 0, 1],
@@ -118,7 +120,7 @@ def inverse(matrix):
 
 
 def transpose(matrix):
-    '''Transposes the given matrix.
+    ''' Transposes the given matrix.
 
     Example:
     >>> m = [[1, 2],
@@ -130,6 +132,29 @@ def transpose(matrix):
     return list(map(list, zip(*matrix)))
 
 
+def main(raw_coordinates, x_size=400, y_size=600):
+    ''' Parses raw_coordinates and calculates corresponding fertile shapes.
+
+    Example:
+    >>> main('{"0 3 4 3"}', x_size=5, y_size=5)
+    '5 15'
+    '''
+    matrix = create_matrix(x_size, y_size)
+    for coords in ast.literal_eval(raw_coordinates):
+        x1, y1, x2, y2 = map(int, coords.split(' '))
+        blank_area((x1, y1), (x2, y2), matrix)
+    return ' '.join(map(str, area_of_shapes(matrix)))
+
+
 if __name__ == '__main__':
-    import doctest
-    doctest.testmod()
+    if len(sys.argv) > 1:
+        if sys.argv[1] == '-t':
+            import doctest
+            doctest.testmod()
+        else:
+            print(main(sys.argv[1]))
+    else:
+        print('''Usage:
+        python analysis.py \'{"0 292 399 307"}\'
+        python analysis.py \'{"48 192 351 207", "48 392 351 407"}\'
+        ''')
